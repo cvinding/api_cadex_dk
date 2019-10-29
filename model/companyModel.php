@@ -35,7 +35,7 @@ class CompanyModel extends \MODEL\BASE\Model {
     public function editAbout(string $title, string $content, string $email, string $phoneNumber) : bool {
         
         // Try and get the profile
-        $profile = $this->database->query("SELECT id FROM company_information WHERE id = 1")->fetchAssoc();
+        $profile = $this->database->query("SELECT id FROM company_information LIMIT 1")->fetchAssoc();
 
         // Profile does not exists? return false
         if(empty($profile)) {

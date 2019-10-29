@@ -12,6 +12,28 @@ $router->get("/", function() {
     exit(json_encode(["result" => "The cadex.dk API", "status" => true]));
 });
 
+$router->get("/healthz", function() {
+    
+    $database = new \DATABASE\MYSQLI\Database();
+
+    $result = $database->query("SELECT NOW()")->fetchAssoc();
+
+    if(empty($result)) {
+
+        $httpCode = 400;
+        $status = false;
+
+    } else {
+
+        $httpCode = 200;
+        $status = true;
+    }
+
+    http_response_code($httpCode);
+
+    exit(json_encode(["status" => $status]));
+});
+
 /**
  * Auth endpoint routes
  */
