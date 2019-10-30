@@ -103,7 +103,7 @@ class Database {
 
             // Merge $typeString and $references
             $variables = array_merge([$typeString], $references);
-var_dump($this->query);die;
+
             // Call bind_param()
             call_user_func_array([$this->query, "bind_param"], $variables);
         }
