@@ -145,17 +145,15 @@ class LogModel extends \MODEL\BASE\Model {
      */
     public function registerIP(string $ip, bool $register) : int {
 
-        $ip = $this->database->query("SELECT id FROM ips WHERE ip = :ip", ["ip" => $ip])->fetchAssoc();
+        $id = $this->database->query("SELECT id FROM ips WHERE ip = :ip", ["ip" => $ip])->fetchAssoc();
 
-        var_dump($ip);
-
-        if(empty($ip) && $register) {
+        if(empty($id) && $register) {
 
             $id = $this->database->query("INSERT INTO ips (ip) VALUES (:ip)",["ip" => $ip])->getLastAutoID();
 
         } else if(!empty($ip)) {
 
-            $id = $ip[0]["id"];
+            $id = $id[0]["id"];
         
         } else {
 
