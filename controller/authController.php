@@ -40,8 +40,6 @@ class AuthController extends \CONTROLLER\BASE\Controller {
             
             $token = $this->authModel->createToken();
 
-            var_dump($this->request->remoteAddr);
-die();            
             // Log this action
             \HELPER\Logger::log($username, $this->request->remoteAddr, 5, 1);
 
