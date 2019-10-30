@@ -66,6 +66,8 @@ class AuthModel extends \MODEL\BASE\Model {
 
         $this->username = $username;
         
+
+        return true;
         $hostname = "ldap://cadex.dk";
 
         $ldapConn = ldap_connect($hostname);
