@@ -65,11 +65,42 @@ class AuthModel extends \MODEL\BASE\Model {
     public function authenticateUser(string $username, string $password) : bool {
 
         $this->username = $username;
-        $this->securityGroups[] = "IT_SG";
+        
+        $hostname = "ldap://cadex.dk";
 
-        //TODO L D A P
-
-        return in_array($username, ["chvr","kemv","tola"]);
+        $ldapConn = ldap_connect($hostname);
+        
+        $ldapRDN = 'CADEX' . "\\" . $username;
+        
+        ldap_set_option($ldapConn, LDAP_OPT_PROTOCOL_VERSION, 3);
+        ldap_set_option($ldapConn, LDAP_OPT_X_TLS_REQUIRE_CERT, 0);
+        ldap_set_option($ldapConn, LDAP_OPT_REFERRALS, 0);
+        
+        /*if(!ldap_start_tls($ldapConn)) {
+            var_dump("LDAP TLS connection failed");
+        }*/
+        
+        $ldapBind = ldap_bind($ldapConn, $ldapRDN, $password);
+        
+        if($ldapBind) {
+           
+            $ldapBaseDN = "OU=Cadex,DC=cadex,DC=dk";
+           
+            $search = "(&(sAMAccountName={$username}))";
+            $result = ldap_search($ldapConn, $ldapBaseDN, $search);
+            $entries = ldap_get_entries($ldapConn, $result);
+        
+            $groups = $entries[0]["memberof"];
+                        
+            for ($i = 0; $i < $groups["count"]; $i++) {
+                $this->securityGroups[] = explode("=",explode(",",$groups[$i])[0])[1];
+            }
+    
+        }
+        
+        ldap_close($ldapConn);
+        
+        return $ldapBind;
     }
 
     /**
