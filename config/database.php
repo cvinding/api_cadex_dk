@@ -9,16 +9,33 @@ namespace CONFIG;
 
 return [
 
-    "DATABASE_DRIVER" => "mysql",
+    "db-01" => [
 
-    "HOSTNAME" => "localhost",
+        "DATABASE_DRIVER" => "mysql",
 
-    "USERNAME" => "phpmyadmin",
+        "HOSTNAME" => "192.168.10.50",
 
-    "PASSWORD" => "admin",
+        "USERNAME" => "service.cadex-api",
 
-    "DATABASE" => "api_cadex_dk",
+        "PASSWORD" => "SecureCadex-2960",
 
-    "CHARSET" => "utf8mb4"
+        "DATABASE" => "cadex-api",
 
+        "CHARSET" => "utf8mb4"
+    ],
+
+    "db-02" => [
+
+        "DATABASE_DRIVER" => "mysql",
+
+        "HOSTNAME" => "192.168.20.50",
+
+        "USERNAME" => "service.cadex-api",
+
+        "PASSWORD" => "SecureCadex-2960",
+
+        "DATABASE" => "cadex-api",
+
+        "CHARSET" => "utf8mb4"
+    ]
 ];
