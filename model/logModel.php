@@ -147,6 +147,8 @@ class LogModel extends \MODEL\BASE\Model {
 
         $ip = $this->database->query("SELECT id FROM ips WHERE ip = :ip", ["ip" => $ip])->fetchAssoc();
 
+        var_dump($ip);
+
         if(empty($ip) && $register) {
 
             $id = $this->database->query("INSERT INTO ips (ip) VALUES (:ip)",["ip" => $ip])->getLastAutoID();

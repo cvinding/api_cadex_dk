@@ -246,8 +246,8 @@ class Database {
      */
     public function getLastAutoID()  {
         // Reset query
-        $this->query->close();
-        $this->query = null;
+        //$this->query->close();
+        //$this->query = null;
 
         return $this->connection->insert_id;
     }
