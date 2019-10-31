@@ -12,6 +12,15 @@ $router->get("/", function() {
     exit(json_encode(["result" => "The cadex.dk API", "status" => true]));
 });
 
+$router->get("/debug", function($request) {
+
+    $response = ["HOSTNAME" => gethostname(), "IP" => $request->serverAddr];
+
+    http_response_code(200);
+
+    exit(json_encode(["result" => $response, "status" => true]));
+});
+
 $router->get("/healthz", function() {
     
     $database = new \DATABASE\MYSQLI\Database();
