@@ -41,7 +41,9 @@ class Database {
             try {
 
                 // Create connection
-                $this->connection = new \PDO($dbServer["DATABASE_DRIVER"] . ":dbname=" . $dbServer["DATABASE"] . ";charset=" . $dbServer["CHARSET"] . ";host=" . $dbServer["HOSTNAME"], $dbServer["USERNAME"], $dbServer["PASSWORD"]);
+                $this->connection = new \PDO($dbServer["DATABASE_DRIVER"] . ":dbname=" . $dbServer["DATABASE"] . ";charset=" . $dbServer["CHARSET"] . ";host=" . $dbServer["HOSTNAME"], $dbServer["USERNAME"], $dbServer["PASSWORD"], [
+                    \PDO::ATTR_TIMEOUT => 3
+                ]);
                 
                 // Set ATTR_ERRMODE to ERRMODE_EXCEPTION
                 $this->connection->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);

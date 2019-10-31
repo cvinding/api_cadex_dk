@@ -2,10 +2,10 @@
 namespace PUBLIC_HTML;
 
 //TODO: used for debugging
-ini_set('display_errors', "On");
+/*ini_set('display_errors', "On");
 ini_set('display_startup_errors', "On");
 error_reporting(E_ALL);
-
+*/
 // Output will always be JSON
 header('Content-Type: application/json');
 

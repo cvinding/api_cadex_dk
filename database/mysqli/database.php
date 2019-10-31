@@ -41,7 +41,9 @@ class Database {
                 }
 
                 // Create connection
-                $this->connection = new \mysqli($dbServer["HOSTNAME"], $dbServer["USERNAME"], $dbServer["PASSWORD"], $dbServer["DATABASE"]);
+                $this->connection = mysqli_init();
+                $this->connection->options(MYSQLI_OPT_CONNECT_TIMEOUT, 3);
+                $this->connection->real_connect($dbServer["HOSTNAME"], $dbServer["USERNAME"], $dbServer["PASSWORD"], $dbServer["DATABASE"]);
 
                 // If no error occurred set $config to this $dbServer and break the loop
                 if($this->connection->connect_errno === 0) {

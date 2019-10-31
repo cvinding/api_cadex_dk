@@ -68,10 +68,13 @@ class AuthController extends \CONTROLLER\BASE\Controller {
         // Output message based on outcome
         if($isValid) {
 
-            // Log this action
-            \HELPER\Logger::log($this->username, $this->request->remoteAddr, 5, 3);
+            $username = $this->authModel->getTokenClaim($token, "uid");
+            $securityGroups = $this->authModel->getTokenClaim($token,"sgr");
 
-            \HELPER\MessageHandler::attachMessage("Valid token.", 200);
+            // Log this action
+            \HELPER\Logger::log($username, $this->request->remoteAddr, 5, 3);
+
+            \HELPER\MessageHandler::attachResult(["message" => "Valid token.", "user" => $username, "securityGroups" => $securityGroups], 200);
         
         } else {
 

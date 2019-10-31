@@ -16,6 +16,12 @@ class MessageHandler {
     private static $messages = [];
 
     /**
+     * The array for storing all system results
+     * @var array $messages
+     */
+    private static $results = [];
+
+    /**
      * attachMessage() is used for attaching response message
      * @param string $message
      * @param int $httpCode
@@ -26,11 +32,29 @@ class MessageHandler {
     }
 
     /**
+     * attachResult() is used for attaching results as response messages
+     * @param array $result
+     * @param int $httpCode = 200
+     * @return void
+     */
+    public static function attachResult(array $result, int $httpCode = 200) : void {
+        self::$results[] = ["result" => $result, "httpCode" => $httpCode];
+    }
+
+    /**
      * getMessages() returns all messages
      * @return array
      */
     public static function getMessages() : array {
         return self::$messages;
+    }
+
+    /**
+     * getResults() returns all results
+     * @return array
+     */
+    public static function getResults() : array {
+        return self::$results;
     }
 
 }
