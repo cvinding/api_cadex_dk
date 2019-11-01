@@ -13,7 +13,7 @@ class ProductModel extends \MODEL\BASE\Model {
      * __construct() call parent::__construct() for setting the Database instance
      */
     public function __construct() {
-        parent::__construct(10);
+        parent::__construct(12);
     }
 
     /**
@@ -34,18 +34,22 @@ class ProductModel extends \MODEL\BASE\Model {
         // Get products
         $products = $this->database->query($sql, $bindable)->fetchAssoc();
 
+        $countResult = $this->database->query("SELECT COUNT(id) count FROM products")->fetchAssoc()[0]["count"];
+
+        $returnable = ["products" => $products, "productCount" => $countResult];
+
         if($imageCount === 0){
-            return $products;
+            return $returnable;
         }
 
         // Foreach product get the images
-        foreach($products as $index => $product) {
+        foreach($returnable["products"] as $index => $product) {
             $images = $this->database->query("SELECT image, type, thumbnail FROM product_images WHERE products_id = :p_id ORDER BY thumbnail DESC LIMIT :limit", ["p_id" => $product["id"], "limit" => $imageCount])->fetchAssoc();
 
-            $products[$index]["images"] = $images;
+            $returnable["products"][$index]["images"] = $images;
         }
 
-        return $products; 
+        return $returnable; 
     }
 
     /**

@@ -13,7 +13,7 @@ class LogModel extends \MODEL\BASE\Model {
      * __construct() call parent::__construct() for setting the Database instance
      */
     public function __construct() {
-        parent::__construct();
+        parent::__construct(12);
     }
 
     /**

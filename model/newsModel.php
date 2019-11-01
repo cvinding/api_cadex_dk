@@ -13,7 +13,7 @@ class NewsModel extends \MODEL\BASE\Model {
      * __construct() call parent::__construct() for setting the Database instance
      */
     public function __construct() {
-        parent::__construct();
+        parent::__construct(6);
     }
 
     /**
@@ -23,6 +23,8 @@ class NewsModel extends \MODEL\BASE\Model {
      */
     public function getNewsPosts(int $page) : array {
 
+        $sqlCount = "SELECT COUNT(id) FROM news";
+
         $sql = "SELECT n.id, n.title, n.content, u.username author, n.created_at FROM news n INNER JOIN users u ON n.author = u.id ORDER BY n.id DESC LIMIT :limit OFFSET :offset";
 
         $bindable = [
@@ -30,7 +32,12 @@ class NewsModel extends \MODEL\BASE\Model {
             "offset" => $this->getOffset($page)
         ];
 
-        return $this->database->query($sql, $bindable)->fetchAssoc();
+        $countResult = $this->database->query("SELECT COUNT(id) newsCount FROM news")->fetchAssoc()[0]["newsCount"];
+
+        $result = $this->database->query($sql, $bindable)->fetchAssoc();
+        //$result["count"] = $countResult;
+
+        return ["newsPosts" => $result, "newsCount" => $countResult];
     }
 
     /**

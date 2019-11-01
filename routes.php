@@ -14,7 +14,7 @@ $router->get("/", function() {
 
 $router->get("/debug", function($request) {
 
-    $response = ["HOSTNAME" => gethostname(), "IP" => $request->serverAddr];
+    $response = ["hostname" => gethostname(), "ip" => $request->serverAddr];
 
     http_response_code(200);
 
