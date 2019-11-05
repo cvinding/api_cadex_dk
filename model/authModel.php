@@ -68,7 +68,7 @@ class AuthModel extends \MODEL\BASE\Model {
         /*$this->securityGroups = ["IT_SG","HR_SG","SALES_SG"];
         return true;*/
         
-        $hostname = "ldap://cadex.dk";
+        $hostname = "ldap://ad.cadex.dk";
 
         $ldapConn = ldap_connect($hostname);
         
