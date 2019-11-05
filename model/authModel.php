@@ -22,7 +22,7 @@ class AuthModel extends \MODEL\BASE\Model {
      * The seconds before the token is usable
      * @var int $notBefore
      */
-    private $notBefore = 1;
+    private $notBefore = -1;
 
     /**
      * The seconds before the token expires
