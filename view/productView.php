@@ -101,5 +101,26 @@ class ProductView extends \VIEW\BASE\View {
         exit(json_encode(["result" => $data, "status" => $status]));
     }
 
+    /**
+     * create() show product creation message
+     * @return void
+     */
+    public function create() : void {
+        $result = \HELPER\MessageHandler::getResults();
+
+        if(!empty($result)) {
+        
+            http_response_code($result[0]["httpCode"]);
+
+            exit(json_encode(["result" => $result[0]["result"], "status" => $this->statusTranslations[$result[0]["httpCode"]]]));
+        } else {
+
+            $message = \HELPER\MessageHandler::getMessages()[0];
+
+            http_response_code($message["httpCode"]);
+    
+            exit($this->createJSONResponse($message["message"], $message["httpCode"]));
+        }
+    }
 
 }

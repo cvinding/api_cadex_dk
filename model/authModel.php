@@ -86,8 +86,6 @@ class AuthModel extends \MODEL\BASE\Model {
         /*if(!ldap_start_tls($ldapConn)) {
             var_dump("LDAP TLS connection failed");
         }*/
-        
-
 
         $ldapBind = ldap_bind($ldapConn, $ldapRDN, $password);
         

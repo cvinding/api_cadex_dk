@@ -37,10 +37,12 @@ class ProductController extends \CONTROLLER\BASE\Controller {
         $result = $this->productModel->createProduct($name, $description, $price);
 
         // Attach message based on outcome
-        if($result) {
+        if($result["status"]) {
             \HELPER\Logger::log($this->username, $this->request->remoteAddr, 1, 5);
 
-            \HELPER\MessageHandler::attachMessage("You have successfully created a new product.", 201);
+            //\HELPER\MessageHandler::attachMessage("You have successfully created a new product.", 201);
+            \HELPER\MessageHandler::attachResult(["id" => $result["id"], "message" => "You have successfully created a new product."], 201);
+            
         } else {
             \HELPER\Logger::log($this->username, $this->request->remoteAddr, 1, 6);
 
