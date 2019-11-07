@@ -64,6 +64,11 @@ class AuthModel extends \MODEL\BASE\Model {
      */
     public function authenticateUser(string $username, string $password) : bool {
 
+        // If $username or $password is nothing return false
+        if($username === "" || $username === null || $password === "" || $password === null) {
+            return false;
+        }
+
         $this->username = $username;
         /*$this->securityGroups = ["IT_SG","HR_SG","SALES_SG"];
         return true;*/
@@ -82,6 +87,8 @@ class AuthModel extends \MODEL\BASE\Model {
             var_dump("LDAP TLS connection failed");
         }*/
         
+
+
         $ldapBind = ldap_bind($ldapConn, $ldapRDN, $password);
         
         if($ldapBind) {
