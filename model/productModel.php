@@ -169,6 +169,7 @@ class ProductModel extends \MODEL\BASE\Model {
         if($currentType === false) {
             return 2;
         }
+        //$currentType = "image/png";
 
         // base64 encode $image
         $image = base64_encode($image);
