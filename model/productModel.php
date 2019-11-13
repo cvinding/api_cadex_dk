@@ -144,6 +144,11 @@ class ProductModel extends \MODEL\BASE\Model {
 
             // Get binary image data
             $image = file_get_contents($file['tmp_name']);
+        
+        } 
+        
+        if($image !== "" && base64_decode($image, true) !== false) {
+            $image = base64_decode($image);
         }
 
         // If $image is larger than 20 mib, then return 1
