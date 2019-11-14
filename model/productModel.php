@@ -86,14 +86,12 @@ class ProductModel extends \MODEL\BASE\Model {
      */
     public function createProduct(string $name, string $description, float $price) : array {
         
-        $database = $this->database->query("INSERT INTO products (name, description, price) VALUES (:name, :description, :price)", ["name" => $name, "description" => $description, "price" => $price]);
+        $database = $this->database->query("INSERT INTO products (name, description, price, start_price) VALUES (:name, :description, :price, :price)", ["name" => $name, "description" => $description, "price" => $price]);
 
         $status = ($database->affectedRows() > 0);
         $id = $database->getLastAutoID();
 
-        return ["id" => $id, "status" => $status];
-        
-        //return ($this->database->query("INSERT INTO products (name, description, price) VALUES (:name, :description, :price)", ["name" => $name, "description" => $description, "price" => $price])->affectedRows() > 0);
+        return ["id" => $id, "status" => $status];    
     }
 
     /**
