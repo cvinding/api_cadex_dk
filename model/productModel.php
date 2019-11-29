@@ -23,8 +23,8 @@ class ProductModel extends \MODEL\BASE\Model {
      * @return array
      */
     public function getProducts(int $imageCount, int $page) : array {
-        
-        $sql = "SELECT id, name, description, price FROM products LIMIT :limit OFFSET :offset";
+
+        $sql = "SELECT id, name, description, price, created_at FROM products LIMIT :limit OFFSET :offset";
 
         $bindable = [
             "limit" => $this->getLimit($page),
@@ -60,7 +60,7 @@ class ProductModel extends \MODEL\BASE\Model {
     public function getProduct(int $id) : array {
 
         // Select product
-        $product = $this->database->query("SELECT id, name, description, price FROM products WHERE id = :id",["id" => $id])->fetchAssoc();
+        $product = $this->database->query("SELECT id, name, description, price, created_at FROM products WHERE id = :id",["id" => $id])->fetchAssoc();
 
         // If product does not exists return empty array
         if(empty($product)) {
