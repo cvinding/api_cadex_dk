@@ -216,4 +216,15 @@ class ProductModel extends \MODEL\BASE\Model {
         return ($this->database->query("DELETE FROM products WHERE id = :id", ["id" => $id])->affectedRows() > 0);
     }
 
+    /**
+     * resetPrices() resets all product prices to their own start prices
+     * @return bool
+     */
+    public function resetPrices() : bool {
+
+        $this->database->query("UPDATE products SET price = start_price")->affectedRows();
+
+        return true;
+    }
+
 }

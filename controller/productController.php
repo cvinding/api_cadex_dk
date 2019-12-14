@@ -148,6 +148,25 @@ class ProductController extends \CONTROLLER\BASE\Controller {
 
             \HELPER\MessageHandler::attachMessage("Unable to find product, product could not be deleted.", 404);
         }
-
     }
+
+    /**
+     * reset() is used to call the $model for resetting all the crawlede prices back to default start price
+     * @return void
+     */
+    public function reset() : void {
+
+        $result = $this->productModel->resetPrices();
+
+        if($result) {
+            \HELPER\Logger::log($this->username, $this->request->remoteAddr, 3, 27);
+
+            \HELPER\MessageHandler::attachMessage("You have successfully reset all product prices.", 200);
+        } else {
+            \HELPER\Logger::log($this->username, $this->request->remoteAddr, 3, 28);
+
+            \HELPER\MessageHandler::attachMessage("Unable to reset all product prices.", 404);
+        }
+    }
+
 }

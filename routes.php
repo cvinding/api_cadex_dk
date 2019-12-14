@@ -106,3 +106,6 @@ $router->post("/product/uploadImage/(\d+)/(true|false)", "Product@uploadImage", 
 $router->put("/product/update/(\d+)", "Product@update", ["IT_SG"]);
 
 $router->delete("/product/delete/(\d+)", "Product@delete", ["IT_SG"]);
+
+// Updates all entries
+$router->put("/product/reset", "Product@reset", ["IT_SG"]);
