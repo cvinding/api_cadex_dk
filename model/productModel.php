@@ -44,7 +44,7 @@ class ProductModel extends \MODEL\BASE\Model {
 
         // Foreach product get the images
         foreach($returnable["products"] as $index => $product) {
-            $images = $this->database->query("SELECT image, type, thumbnail FROM product_images WHERE products_id = :p_id ORDER BY thumbnail DESC LIMIT :limit", ["p_id" => $product["id"], "limit" => $imageCount])->fetchAssoc();
+            $images = $this->database->query("SELECT image, id, type, thumbnail FROM product_images WHERE products_id = :p_id ORDER BY thumbnail DESC LIMIT :limit", ["p_id" => $product["id"], "limit" => $imageCount])->fetchAssoc();
 
             $returnable["products"][$index]["images"] = $images;
         }
@@ -68,7 +68,7 @@ class ProductModel extends \MODEL\BASE\Model {
         }
 
         // Select images for the product
-        $images = $this->database->query("SELECT image, type, thumbnail FROM product_images WHERE products_id = :id ORDER BY thumbnail DESC",["id" => $id])->fetchAssoc();
+        $images = $this->database->query("SELECT image, id, type, thumbnail FROM product_images WHERE products_id = :id ORDER BY thumbnail DESC",["id" => $id])->fetchAssoc();
 
         // Add images into product array
         $product[0]["images"] = $images;
@@ -100,9 +100,10 @@ class ProductModel extends \MODEL\BASE\Model {
      * @param string $name
      * @param string $description
      * @param float $price
+     * @param array $imagesToDelete
      * @return bool
      */
-    public function updateProduct(int $id, string $name, string $description, float $price) : bool {
+    public function updateProduct(int $id, string $name, string $description, float $price, array $imagesToDelete = []) : bool {
 
         // Select entry to see if exists
         $entry = $this->database->query("SELECT id FROM products WHERE id = :id", ["id" => $id])->fetchAssoc();
@@ -114,6 +115,10 @@ class ProductModel extends \MODEL\BASE\Model {
 
         // Update the entry
         $this->database->query("UPDATE products SET name = :name, description = :description, price = :price WHERE id = :id", ["name" => $name, "description" => $description, "price" => $price, "id" => $id])->affectedRows();
+
+        if(!empty($imagesToDelete)) {
+            $this->deleteImages($imagesToDelete);
+        }
 
         // Return true
         return true;
